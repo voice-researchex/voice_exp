@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>再生テスト</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Noto Sans JP', sans-serif; background-color: #f8fafc; }
+    </style>
+</head>
+<body class="min-h-screen text-slate-800 flex flex-col justify-between">
+
+    <header class="w-full bg-white shadow-sm border-b border-slate-200 py-4 px-6 mb-6">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-lg bg-sky-400 flex items-center justify-center text-white">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" viewBox="0 0 24 24">
+        <path d="M4 10v4M8 7v10M12 4v16M16 7v10M20 10v4" />
+    </svg>
+</div>
+                <h1 class="text-lg font-semibold text-slate-900">AI音声が与える心理的影響についての聴取実験</h1>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-2xl mx-auto w-full px-4 mb-12 flex-grow">
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 text-center space-y-6">
+            <div class="w-16 h-16 bg-sky-100 text-sky-600 rounded-full flex items-center justify-center mx-auto text-2xl">
+                🔊
+            </div>
+            <div>
+                <h2 class="text-xl font-bold text-slate-900">再生テスト</h2>
+            </div>
+
+            <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 space-y-4">
+                <button type="button" onclick="playTestAudio()" class="bg-white border border-slate-300 hover:border-slate-400 text-slate-700 font-medium py-2.5 px-5 rounded-xl shadow-sm transition inline-flex items-center space-x-2">
+                    <svg class="w-5 h-5 text-sky-600" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/></svg>
+                    <span>テスト音声を再生</span>
+                </button>
+                <p id="testAudioStatus" class="text-xs text-slate-400 italic">ボタンを押して音声が聞き取れるか確認してください</p>
+            </div>
+
+            <button type="button" onclick="goToTrials()" class="w-full bg-sky-400 hover:bg-sky-500 text-white font-semibold py-3 px-6 rounded-xl transition shadow-sm">
+                音声が確認できたので次へ進む
+            </button>
+        </section>
+    </main>
+
+    <script src="common.js"></script>
+    <script>
+        // 未入力で直接開かれた場合はトップへ戻す
+        const expState = loadExpState();
+        if (!expState.participant.id) {
+            window.location.href = 'index.html';
+        }
+
+        function playTestAudio() {
+            playAudioFile('audio/audio_test.wav', "音声をテスト再生しています", 1.0, 1.0);
+            document.getElementById('testAudioStatus').textContent = "テスト音声を出力中";
+        }
+
+        function goToTrials() {
+            window.location.href = 'experiment.html';
+        }
+    </script>
+</body>
+</html>
