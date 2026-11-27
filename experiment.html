@@ -233,8 +233,16 @@
             document.getElementById('anxietyBox').scrollIntoView({ behavior: 'smooth' });
         }
 
+        const RATING_LABELS = {
+            1: "非常に信頼できる",
+            2: "やや信頼できる",
+            3: "どちらとも言えない",
+            4: "やや不安に思う",
+            5: "非常に不安に思う"
+        };
+
         function handleAnxietyRating(score) {
-            selectedAnxiety = score;
+            selectedAnxiety = RATING_LABELS[score];
 
             const buttons = document.querySelectorAll('.likert-btn');
             buttons.forEach((btn, idx) => {
