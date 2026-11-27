@@ -68,25 +68,19 @@
             window.location.href = 'index.html';
         }
 
-        function formatReactionTimeSec(r) {
-            if (typeof r.reactionTimeSec === 'number') return r.reactionTimeSec;
-            if (typeof r.reactionTimeMs === 'number') return Number((r.reactionTimeMs / 1000).toFixed(2));
-            return r.reactionTime ?? '';
-        }
-
         const cleanResults = expState.results.map(r => ({
-            ParticipantID: r.participantId,
-            Age: r.age,
-            Gender: r.gender,
-            TrialOrder: r.trialOrder,
-            ConditionID: r.conditionId,
-            Framing: r.framing,
-            Pitch: r.pitch,
-            Choice: r.choice,
-            ReactionTime: formatReactionTimeSec(r),
-            RatingScore: r.ratingScore,
-            Timestamp: r.timestamp
-        }));
+    ParticipantID: r.participantId,
+    Age: r.age,
+    Gender: r.gender,
+    TrialOrder: r.trialOrder,
+    ConditionID: r.conditionId,
+    Framing: r.framing,
+    Pitch: r.pitch,
+    Choice: r.choice,
+    ReactionTime: r.ReactionTime,
+    RatingScore: r.ratingScore,
+    Timestamp: r.timestamp
+}));
 
         document.getElementById('dataPreview').textContent = JSON.stringify(cleanResults, null, 2);
 
