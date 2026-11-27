@@ -30,7 +30,7 @@
             <div>
                 <h2 class="text-2xl font-bold text-slate-900">すべての実験が完了しました</h2>
                 <p class="text-sm text-slate-500 mt-1">ご協力いただきありがとうございました</p>
-                <p class="text-sm text-slate-500 mt-1">下のボタンを押してデータを送信してください</p>
+           		<p class="text-sm text-slate-500 mt-1">下のボタンを押してデータを送信してください</p>
             </div>
 
             <!-- GAS 送信ボタン -->
@@ -68,21 +68,7 @@
             window.location.href = 'index.html';
         }
 
-        const cleanResults = expState.results.map(r => ({
-    ParticipantID: r.participantId,
-    Age: r.age,
-    Gender: r.gender,
-    TrialOrder: r.trialOrder,
-    ConditionID: r.conditionId,
-    Framing: r.framing,
-    Pitch: r.pitch,
-    Choice: r.choice,
-    ReactionTime: r.ReactionTime,
-    RatingScore: r.ratingScore,
-    Timestamp: r.timestamp
-}));
-
-        document.getElementById('dataPreview').textContent = JSON.stringify(cleanResults, null, 2);
+        document.getElementById('dataPreview').textContent = JSON.stringify(expState.results, null, 2);
 
         function submitDataToGAS() {
             const statusDiv = document.getElementById('gasStatus');
@@ -102,7 +88,7 @@
                 method: "POST",
                 mode: "no-cors",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(cleanResults)
+                body: JSON.stringify(expState.results)
             })
             .then(() => {
                 statusDiv.className = "text-xs font-semibold text-emerald-600 mt-2";
@@ -112,7 +98,7 @@
             .catch(err => {
                 console.error(err);
                 statusDiv.className = "text-xs font-semibold text-rose-600 mt-2";
-                statusDiv.innerText = "送信エラーが発生しました 再試行するか結果データをコピーしてください";
+                statusDiv.innerText = "送信エラーが発生しました　再試行するか結果データをコピーしてください";
                 submitBtn.disabled = false;
             });
         }
@@ -120,11 +106,11 @@
         function generateCSV() {
             const headers = [
                 'ParticipantID', 'Age', 'Gender', 'TrialOrder', 'ConditionID',
-                'Framing', 'Pitch', 'Choice', 'ReactionTime', 'RatingScore', 'Timestamp'
+                'Framing', 'Pitch', 'Prosody', 'Choice', 'ReactionTime_ms', 'RatingScore', 'Timestamp'
             ];
-            const rows = cleanResults.map(r => [
-                r.ParticipantID, r.Age, r.Gender, r.TrialOrder, r.ConditionID,
-                r.Framing, r.Pitch, r.Choice, r.ReactionTime, r.RatingScore, r.Timestamp
+            const rows = expState.results.map(r => [
+                r.participantId, r.age, r.gender, r.trialOrder, r.conditionId,
+                r.framing, r.pitch, r.prosody, r.choice, r.reactionTimeMs, r.ratingScore, r.timestamp
             ]);
             return [headers, ...rows].map(e => e.join(",")).join("\n");
         }
