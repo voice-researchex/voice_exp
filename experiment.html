@@ -218,7 +218,7 @@
             if (selectedChoice || !audioFinishedOnce) return;
 
             const clickTime = performance.now();
-            reactionTimeMs = Math.round(clickTime - decisionStartTime);
+            reactionTimeMs = Number(((clickTime - decisionStartTime) / 1000).toFixed(2));
             selectedChoice = choice;
 
             document.querySelectorAll('.decision-btn').forEach(btn => {
